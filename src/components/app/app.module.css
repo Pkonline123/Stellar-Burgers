@@ -1,0 +1,7 @@
+.mainContent {
+    display: flex;
+    padding: 16px 320px 16px 320px;
+    justify-content: space-between;
+    margin: 0 auto;
+    gap: 40px;
+}
