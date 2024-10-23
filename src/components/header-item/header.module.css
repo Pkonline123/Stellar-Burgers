@@ -1,6 +1,11 @@
+.headerBackground {
+    background: #1C1C21;
+}
+
 .title {
     display: flex;
-    padding: 16px 320px 16px 320px;
+    /* padding: 16px 320px 16px 320px; */
+    padding: 16px;
     height: 88px;
     justify-content: space-between;
     align-items: center;

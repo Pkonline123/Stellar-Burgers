@@ -3,10 +3,10 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerItem from "./burger-ingredients-item";
 import { useMemo } from 'react';
 import BurgerConstructorStyle from "./burger-ingredients.module.css";
-import dataType from '../../utils/dataType';
+import DataItem from '../../utils/dataType';
 
 type Props = {
-    data: dataType[];
+    data: DataItem[];
 }
 
 
@@ -26,7 +26,7 @@ export default function BurgerIngredients(props: Props) {
             <p className="text text_type_main-large pl-0 pr-0 pb-5 pt-10">
                 Соберите бургер
             </p>
-            <div style={{ display: 'flex' }}>
+            <div className={BurgerConstructorStyle.burgerIngredientNavigation}>
                 <Tab value="bun" active={current === 'bun'} onClick={setCurrent}>
                     Булки
                 </Tab>

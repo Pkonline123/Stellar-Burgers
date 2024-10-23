@@ -1,11 +1,16 @@
 import React from "react";
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerConstructorStyle from "./burger-ingredients.module.css";
+import DataItem from "../../utils/dataType";
 
-export default function BurgerItem(props: React.ComponentProps<any>) {
+type Props = {
+    data: DataItem[];
+}
+
+export default function BurgerItem(props: Props) {
     return (
         <>
-            {props.data.map((element: any) => (
+            {props.data.map((element) => (
                 <div key={element._id} className={BurgerConstructorStyle.burgerIngredientItem}>
                     <Counter count={1} size="default" extraClass="m-1" />
                     <img alt={element.name} title={element.name} src={element.image} />
