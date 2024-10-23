@@ -26,6 +26,7 @@
     align-items: center;
     text-align: center;
     position: relative;
+    cursor: pointer;
 }
 
 .burgerIngredientitemPrice {
