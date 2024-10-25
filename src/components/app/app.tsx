@@ -10,11 +10,23 @@ export default function App() {
 
   const [data, setData] = React.useState([]);
 
-   useEffect(() => {
-    const getData = async () => await fetch(urlIngrident).then(res => res.json()).then(res => setData(res.data)).catch(err => console.log(err));
+  useEffect(() => {
+    const getData = async () => {
+        try {
+            const res = await fetch(urlIngrident);
+            if (res.ok) {
+                const data = await res.json();
+                setData(data.data);
+            } else {
+                throw new Error(`Ошибка ${res.status}`);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     getData();
-   }, []);
+}, []);
 
   return (
     <>

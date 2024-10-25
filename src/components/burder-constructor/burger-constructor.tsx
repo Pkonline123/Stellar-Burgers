@@ -4,6 +4,7 @@ import burgerConstructorStyle from './burger-constructor-item.module.css';
 import DataItem from '../../utils/dataType';
 import { Modal } from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
+import { useModal } from "../hooks/useModal";
 
 type Props = {
     data: DataItem[];
@@ -11,11 +12,16 @@ type Props = {
 
 export default function BurgerConstructor(props: Props) {
 
-    const [isOpen, setIsOpen] = React.useState(false);
+    const { isModalOpen, openModal, closeModal } = useModal();
 
-    function toggleModal(value?: boolean) {
-        setIsOpen((prevState) =>  typeof value === 'boolean' ? value : !prevState);
+    function toggleModal() {
+        if (isModalOpen) {
+            closeModal();
+        } else {
+            openModal();
+        }
     }
+    
     const allPrice = useMemo(() => {
         const firstBun = props.data[0];
         return props.data.reduce((acc, element, index) => {
@@ -84,9 +90,11 @@ export default function BurgerConstructor(props: Props) {
                     </Button>
                 </div>
             </div>
-            <Modal isOpen={isOpen} onClose={() => toggleModal(false)}>
-                <OrderDetails />
-            </Modal>
+            {isModalOpen && (
+                <Modal onClose={closeModal}>
+                    <OrderDetails />
+                </Modal>
+            )}
         </section >
     );
 }
