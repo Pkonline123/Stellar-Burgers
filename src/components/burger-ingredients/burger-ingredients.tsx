@@ -1,6 +1,6 @@
 import React from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import BurgerItem from "./burger-ingredients-item";
+import BurgerItems from "./burger-ingredients-item";
 import { useMemo } from 'react';
 import BurgerConstructorStyle from "./burger-ingredients.module.css";
 import DataItem from '../../utils/dataType';
@@ -43,19 +43,19 @@ export default function BurgerIngredients(props: Props) {
                         Булки
                     </p>
                     <div className={BurgerConstructorStyle.burgerIngredientContainer}>
-                        <BurgerItem data={burgerItems.bun} />
+                        <BurgerItems data={burgerItems.bun} />
                     </div>
                     <p id="sauce" className="text text_type_main-medium pl-0 pr-0 pb-4 pt-10">
                         Соусы
                     </p>
                     <div className={BurgerConstructorStyle.burgerIngredientContainer}>
-                        <BurgerItem data={burgerItems.sauce} />
+                        <BurgerItems data={burgerItems.sauce} />
                     </div>
                     <p id="main" className="text text_type_main-medium pl-0 pr-0 pb-4 pt-10">
                         Начинки
                     </p>
                     <div className={BurgerConstructorStyle.burgerIngredientContainer}>
-                        <BurgerItem data={burgerItems.main} />
+                        <BurgerItems data={burgerItems.main} />
                     </div>
                 </div>
             </div>

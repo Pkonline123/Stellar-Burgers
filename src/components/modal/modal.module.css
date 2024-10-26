@@ -1,0 +1,33 @@
+.modal {
+    display: flex;
+    flex-direction: column;
+    /* position: absolute; */
+    position: fixed;
+    max-width: 720px;
+    width: 100%;
+    background-color: #1c1c21;
+    border-radius: 40px;
+    margin: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 1;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    z-index: 7;
+}
+
+
+.titleContainer {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    padding: 40px 40px 0px 40px;
+}
+
+
+.closeButton {
+    background-color: transparent;
+    border: none;
+    z-index: 10;
+    cursor: pointer;
+}

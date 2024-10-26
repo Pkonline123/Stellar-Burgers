@@ -2,12 +2,26 @@ import React, { useMemo } from "react";
 import { ConstructorElement, DragIcon, CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import burgerConstructorStyle from './burger-constructor-item.module.css';
 import DataItem from '../../utils/dataType';
+import { Modal } from "../modal/modal";
+import OrderDetails from "../order-details/order-details";
+import { useModal } from "../hooks/useModal";
 
 type Props = {
     data: DataItem[];
 }
 
 export default function BurgerConstructor(props: Props) {
+
+    const { isModalOpen, openModal, closeModal } = useModal();
+
+    function toggleModal() {
+        if (isModalOpen) {
+            closeModal();
+        } else {
+            openModal();
+        }
+    }
+    
     const allPrice = useMemo(() => {
         const firstBun = props.data[0];
         return props.data.reduce((acc, element, index) => {
@@ -19,6 +33,9 @@ export default function BurgerConstructor(props: Props) {
         }, 0);
     }, [props.data]);
 
+    if (props.data.length === 0) {
+        return null
+    }
     return (
         <section>
             <div className={`${burgerConstructorStyle.containerConstructor} mr-4 mb-10 ml-4 mt-25`}>
@@ -68,11 +85,16 @@ export default function BurgerConstructor(props: Props) {
                     <CurrencyIcon type="primary" />
                 </div>
                 <div>
-                    <Button htmlType="button" type="primary" size="medium">
+                    <Button htmlType="button" type="primary" size="medium" onClick={toggleModal}>
                         Оформить заказ
                     </Button>
                 </div>
             </div>
+            {isModalOpen && (
+                <Modal onClose={closeModal}>
+                    <OrderDetails />
+                </Modal>
+            )}
         </section >
     );
 }
