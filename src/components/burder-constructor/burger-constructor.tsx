@@ -5,96 +5,166 @@ import DataItem from '../../utils/dataType';
 import { Modal } from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import { useModal } from "../hooks/useModal";
+import { useDrag, useDrop } from 'react-dnd';
+import { addIngredient, removeIngredient, updateItemsOrder } from "../../services/constructor/reducer";
+import { useAppDispatch, useAppSelector } from "../../services/store";
+import { fetchOrders } from "../../services/order/thunc";
 
-type Props = {
-    data: DataItem[];
+
+function BurgerConstructorItem({ item, index }: { item: DataItem; index: number }) {
+    const dispatch = useAppDispatch();
+
+    const [{ isDragging }, dragRef] = useDrag({
+        type: 'item',
+        item: { index },
+        collect: (monitor) => ({
+            isDragging: monitor.isDragging(),
+        })
+    });
+
+    const opasity = isDragging ? 0 : 1;
+
+    const [, dropRef] = useDrop({
+        accept: 'item',
+        hover(draggedItem: { index: number }) {
+            if (draggedItem.index !== index) {
+                dispatch(updateItemsOrder({ fromIndex: draggedItem.index, toIndex: index }));
+                draggedItem.index = index;
+            }
+        },
+    });
+
+    const handleDelete = () => {
+        dispatch(removeIngredient(index));
+    };
+
+    return (
+        <div ref={(node) => dragRef(dropRef(node))} className={burgerConstructorStyle.constructorItem} style={{ opacity: opasity }}>
+            <DragIcon type="primary" />
+            <ConstructorElement
+                text={item.name}
+                price={item.price}
+                thumbnail={item.image_large}
+                handleClose={handleDelete}
+            />
+        </div>
+    );
 }
 
-export default function BurgerConstructor(props: Props) {
+export default function BurgerConstructor() {
 
     const { isModalOpen, openModal, closeModal } = useModal();
+    const { bun, items } = useAppSelector((state) => state.constructorBurger);
+    const orderInfo = useAppSelector((state) => state.order);
+    const dispatch = useAppDispatch();
 
-    function toggleModal() {
-        if (isModalOpen) {
-            closeModal();
-        } else {
-            openModal();
-        }
+    //Если необходмо будет подстветить область, можно за юзать овер
+    const [, dropTarget] = useDrop({
+        accept: 'ingredient',
+        drop: (item: DataItem) => handleDrop(item),
+        // collect: (monitor) => ({
+        //     isOver: monitor.isOver(),
+        // }),
+    });
+
+    const handleDrop = (item: DataItem) => {
+        dispatch(addIngredient(item));
+    };
+
+    const postOrderInfo = () => {
+        const ingredients = bun?._id ? [bun._id, ...items.map((item) => item._id), bun._id] : items.map((item) => item._id);
+
+        dispatch(fetchOrders(ingredients)).then(() => {
+            openModal()
+        });
     }
-    
+
+    // function toggleModal() {
+    //     if (isModalOpen) {
+    //         closeModal();
+    //     } else {
+    //         openModal();
+    //     }
+    // }
+
     const allPrice = useMemo(() => {
-        const firstBun = props.data[0];
-        return props.data.reduce((acc, element, index) => {
-            if (index === 0 || index === props.data.length - 1) {
-                return acc + firstBun.price;
-            }
+        const bunPrice = bun ? bun.price * 2 : 0;
+        const ingredientsPrice = items ? items.reduce((acc, element) => acc + element.price, 0) : 0;
+        return bunPrice + ingredientsPrice;
+    }, [bun, items]);
 
-            return acc + element.price;
-        }, 0);
-    }, [props.data]);
 
-    if (props.data.length === 0) {
-        return null
-    }
     return (
-        <section>
+        <section ref={dropTarget} className={burgerConstructorStyle.burgerConstructorMainContainer}>
             <div className={`${burgerConstructorStyle.containerConstructor} mr-4 mb-10 ml-4 mt-25`}>
-                <div>
-                    <div className="pl-6 pt-4 pb-4 pr-8">
+                <div className={burgerConstructorStyle.burgerContainerDraging}>
+
+                    {bun ? (
                         <ConstructorElement
                             type="top"
                             isLocked={true}
-                            text={`${props.data[0].name} верх`}
-                            price={props.data[0].price}
-                            thumbnail={props.data[0].image_large}
+                            text={`${bun.name} (верх)`}
+                            price={bun.price}
+                            thumbnail={bun.image_large}
                         />
-                    </div>
-                    <div className={burgerConstructorStyle.scroll}>
-                        {props.data.map((element, index: React.Key, array) => (
-                            index === 0 ? null : index === array.length - 1 ? null : (
-                                <div key={element._id} className={`${index === 0 ? "pl-8 pr-8 pb-0 pt-0" : index === array.length - 1 ? "pl-8 pr-8 pb-0 pt-0" : "pl-0 pr-8 pb-0 pt-0"}`} >
-                                    <div className={burgerConstructorStyle.constructorItem}>
-                                        {index === 0 ? undefined : index === array.length - 1 ? undefined : <DragIcon type={"primary"} />}
-                                        <ConstructorElement
-                                            key={index}
-                                            type={index === 0 ? "top" : index === array.length - 1 ? "bottom" : undefined}
-                                            isLocked={index === 0 ? true : index === array.length - 1 ? true : undefined}
-                                            text={index === 0 ? `${element.name} верх` : index === array.length - 1 ? `${element.name} низ` : `${element.name}`}
-                                            price={element.price}
-                                            thumbnail={element.image_large}
-                                        />
-                                    </div>
-                                </div>
-                            )
-                        ))}
-                    </div>
-                    <div className="pl-6 pt-4 pb-4 pr-8">
+                    ) : (
+                        <div className={burgerConstructorStyle.burgerBunTopDraging}>
+                            <p className="text text_type_main-default">Выберите булку</p>
+                        </div>
+                    )}
+
+                    {items && items.length > 0 ? (
+                        <div className={`${burgerConstructorStyle.scroll} mr-0 mb-4 ml-0 mt-4`}>
+                            {items.map((element, index) => (
+                                // <div key={`${element._id}${index}`} className={burgerConstructorStyle.constructorItem} style={{ opacity }}>
+                                //     <DragIcon type="primary" />
+                                //     <ConstructorElement
+                                //         text={element.name}
+                                //         price={element.price}
+                                //         thumbnail={element.image_large}
+                                //         handleClose={() => handleDelete(index)}
+                                //     />
+                                // </div>
+                                <BurgerConstructorItem key={`${element._id}${index}`} item={element} index={index} />
+                            ))}
+                        </div>
+                    ) : (
+                        <div className={burgerConstructorStyle.burgerBunMidleDraging}>
+                            <p className="text text_type_main-default">Выберите ингридиент</p>
+                        </div>
+                    )}
+
+                    {bun ? (
                         <ConstructorElement
                             type="bottom"
                             isLocked={true}
-                            text={`${props.data[0].name} низ`}
-                            price={props.data[0].price}
-                            thumbnail={props.data[0].image_large}
+                            text={`${bun.name} (низ)`}
+                            price={bun.price}
+                            thumbnail={bun.image_large}
                         />
+                    ) : (
+                        <div className={burgerConstructorStyle.burgerBunBotDraging}>
+                            <p className="text text_type_main-default">Выберите булку</p>
+                        </div>
+                    )}
+                </div>
+
+                <div className={burgerConstructorStyle.confirmContainer}>
+                    <div className={burgerConstructorStyle.priceContainer}>
+                        <p className="text text_type_main-default">{allPrice}</p>
+                        <CurrencyIcon type="primary" />
                     </div>
-                </div>
-            </div>
-            <div className={burgerConstructorStyle.confirmContainer}>
-                <div className={burgerConstructorStyle.priceContainer}>
-                    <p className="text text_type_main-default">{allPrice}</p>
-                    <CurrencyIcon type="primary" />
-                </div>
-                <div>
-                    <Button htmlType="button" type="primary" size="medium" onClick={toggleModal}>
+                    <Button htmlType="button" type="primary" size="medium" onClick={postOrderInfo}>
                         Оформить заказ
                     </Button>
                 </div>
+
+                {isModalOpen && (
+                    <Modal onClose={closeModal}>
+                        <OrderDetails number={orderInfo.order?.number ?? null} />
+                    </Modal>
+                )}
             </div>
-            {isModalOpen && (
-                <Modal onClose={closeModal}>
-                    <OrderDetails />
-                </Modal>
-            )}
-        </section >
+        </section>
     );
 }
