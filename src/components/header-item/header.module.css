@@ -1,0 +1,31 @@
+.headerBackground {
+    background: #1C1C21;
+}
+
+.title {
+    display: flex;
+    /* padding: 16px 320px 16px 320px; */
+    padding: 16px;
+    height: 88px;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1280px;
+    width: 100%;
+    margin: 0 auto;
+    background: #1C1C21;
+}
+
+.сontainer {
+    display: flex;
+}
+
+.menuItem {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.logoItem {
+    display: flex;
+    align-items: center
+}

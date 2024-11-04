@@ -1,0 +1,113 @@
+/* .customDragIcon {
+    position: absolute;
+    left: 10px;
+    top: 35%;
+  } */
+
+.burgerConstructorMainContainer {
+  width: 100%;
+}
+
+.containerConstructor {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.constructorItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.scroll {
+  min-height: 0;
+  max-height: 464px;
+  overflow: hidden;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  display: grid;
+  gap: 16px;
+  width: 100%;
+  /* justify-content: end; */
+}
+
+.scroll::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background-color: #2F2F37;
+}
+
+.scroll::-webkit-scrollbar-thumb {
+  background-color: #8585AD;
+}
+
+.scroll::-webkit-scrollbar-button {
+  width: 99px;
+  height: 99px;
+}
+
+.confirmContainer {
+  display: flex;
+  justify-content: end;
+  gap: 40px;
+}
+
+.priceContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.burgerContainerDraging {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  padding: 20px 20px;
+}
+
+.burgerBunTopDraging {
+  padding: 16px 24px;
+  display: flex;
+  background: var(--background-element);
+  max-width: 536px;
+  width: 100%;
+  min-height: 80px;
+  box-sizing: border-box;
+  border-radius: 88px 88px 40px 40px;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.burgerBunBotDraging {
+  padding: 16px 24px;
+  display: flex;
+  border-radius: 40px 40px 88px 88px;
+  background: var(--background-element);
+  max-width: 536px;
+  width: 100%;
+  min-height: 80px;
+  box-sizing: border-box;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.burgerBunMidleDraging {
+  padding: 16px 24px;
+  display: flex;
+  border-radius: 40px;
+  background: var(--background-element);
+  max-width: 536px;
+  width: 100%;
+  min-height: 80px;
+  box-sizing: border-box;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  margin: 16px 0px;
+}
