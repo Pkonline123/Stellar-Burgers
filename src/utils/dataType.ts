@@ -1,4 +1,5 @@
 type DataItem = {
+        id: string;
         _id: string;
         name: string;
         type: string;

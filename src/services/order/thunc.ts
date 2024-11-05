@@ -1,12 +1,21 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
+import requestWrapper from '../../utils/requestWrapper';
 
 const urlOrders = "https://norma.nomoreparties.space/api/orders";
+
+interface OrderResponse {
+    name: string;
+    order: {
+        number: number;
+    };
+    success: boolean;
+}
 
 export const fetchOrders = createAsyncThunk(
     'orders/fetchOrderInfo',
     async (burgerIngredients: string[]) => {
-        try {
-            const res = await fetch(urlOrders, {
+        return await requestWrapper<OrderResponse>(() =>
+            fetch(urlOrders, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -14,16 +23,7 @@ export const fetchOrders = createAsyncThunk(
                 body: JSON.stringify({
                     ingredients: burgerIngredients
                 })
-            });
-            if (res.ok) {
-                const data = await res.json();
-                return data;
-            } else {
-                throw new Error(`Ошибка ${res.status}`);
-            }
-        } catch (error) {
-            console.log(error);
-            return error;
-        }
-    },
+            })
+        );
+    }
 )

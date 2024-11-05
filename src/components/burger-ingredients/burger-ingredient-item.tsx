@@ -4,13 +4,16 @@ import BurgerConstructorStyle from "./burger-ingredients.module.css";
 import DataItem from "../../utils/dataType";
 import { useDrag } from 'react-dnd';
 import { useAppSelector } from "../../services/store";
+import { RootState } from '../../services/store';
 
-type Props = {
+type IngredientIProps = {
     element: DataItem;
     onClick: (element: DataItem) => void;
 }
 
-export default function BurgerIngredientItem({ element, onClick }: Props) {
+const getStateConstructorBurger = (store: RootState) => store.constructorBurger;
+
+export default function BurgerIngredientItem({ element, onClick }: IngredientIProps) {
     const [{ isDragging }, dragRef] = useDrag(() => ({
         type: 'ingredient',
         item: element,
@@ -19,7 +22,7 @@ export default function BurgerIngredientItem({ element, onClick }: Props) {
         }),
     }));
 
-    const constructorBurger = useAppSelector((store) => store.constructorBurger);
+    const constructorBurger = useAppSelector(getStateConstructorBurger);
 
     const count = useMemo(() => {
         if (!constructorBurger) return 0;

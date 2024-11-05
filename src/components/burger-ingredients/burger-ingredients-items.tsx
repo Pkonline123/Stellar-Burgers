@@ -6,14 +6,17 @@ import { useAppDispatch, useAppSelector } from "../../services/store";
 import { dropCurentIngrident, setCurentIngrident } from "../../services/ingredients/reducer";
 import BurgerIngredientItem from "./burger-ingredient-item";
 import DataItem from "../../utils/dataType";
+import { RootState } from '../../services/store';
 
-type Props = {
+type BurgerItemsProps = {
     data: DataItem[];
 };
 
-export default function BurgerItems(props: Props) {
+const getStateConstructorBurger = (store: RootState) => store.ingredients.curentIngrident;
+
+export default function BurgerItems({ data }: BurgerItemsProps) {
     const { isModalOpen, openModal, closeModal } = useModal();
-    const currentElement = useAppSelector(state => state.ingredients.curentIngrident);
+    const currentElement = useAppSelector(getStateConstructorBurger);
     const dispatch = useAppDispatch();
 
     function handleOpenModal(element: DataItem) {
@@ -28,7 +31,7 @@ export default function BurgerItems(props: Props) {
 
     return (
         <>
-            {props.data.map((element) => (
+            {data.map((element) => (
                 <BurgerIngredientItem
                     key={element._id}
                     element={element}

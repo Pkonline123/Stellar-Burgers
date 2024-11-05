@@ -7,24 +7,29 @@ import { useAppDispatch, useAppSelector } from '../../services/store';
 import { fetchIngredients } from '../../services/ingredients/thunc';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { RootState } from '../../services/store';
+
+const getState = (store: RootState) => store.ingredients.items;
 
 export default function App() {
   const dispatch = useAppDispatch();
-  const data = useAppSelector((store) => store.ingredients.items);
+  const data = useAppSelector(getState);
 
   useEffect(() => {
     dispatch(fetchIngredients());
   }, [dispatch]);
 
   return (
-    <DndProvider backend={HTML5Backend}>
+    <>
       <Header />
-      <main>
-        <section className={mainStyles.mainContent}>
-          <BurgerIngredients data={data} />
-          <BurgerConstructor />
-        </section>
-      </main>
-    </DndProvider>
+      <DndProvider backend={HTML5Backend}>
+        <main>
+          <section className={mainStyles.mainContent}>
+            <BurgerIngredients data={data} />
+            <BurgerConstructor />
+          </section>
+        </main>
+      </DndProvider>
+    </>
   );
 }

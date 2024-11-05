@@ -2,16 +2,16 @@ import React from "react";
 import ConfirmOrder from "../../images/confirmOrder.svg";
 import styles from "./order-details.module.css";
 
-type Props = {
+type OrderDetailsProps = {
     number: null | number
 }
 
-export default function OrderDetails(props: Props) {
+export default function OrderDetails({ number }: OrderDetailsProps) {
     return (
         <div className={styles.container}>
-            {props.number &&
+            {number &&
                 <>
-                    <p className={`${styles.identifiredOrderNumber} text text_type_digits-large`}>{props.number}</p>
+                    <p className={`${styles.identifiredOrderNumber} text text_type_digits-large`}>{number}</p>
                     <p className={`${styles.identifiredOrderText} text text_type_main-medium`}>
                         идентификатор заказа
                     </p>

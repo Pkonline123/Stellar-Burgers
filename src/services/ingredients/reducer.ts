@@ -47,7 +47,7 @@ export const IngredientsSlice = createSlice({
                 state.err = "";
             })
             .addCase(fetchIngredients.fulfilled, (state, action) => {
-                state.items = action.payload;
+                state.items = action.payload.data;
                 state.loadding = false;
                 state.err = "";
             })

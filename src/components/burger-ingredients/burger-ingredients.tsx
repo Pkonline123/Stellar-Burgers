@@ -5,28 +5,26 @@ import { useMemo } from 'react';
 import BurgerConstructorStyle from "./burger-ingredients.module.css";
 import DataItem from '../../utils/dataType';
 
-type Props = {
+type BurgerIngredientsProps = {
     data: DataItem[];
 }
 
-//const sections = ['bun', 'sauce', 'main'];
-export default function BurgerIngredients(props: Props) {
+
+export default function BurgerIngredients({ data }: BurgerIngredientsProps) {
     const [current, setCurrent] = React.useState('bun')
-    //const [visibleSection, setVisibleSection] = React.useState<string | null>(null);
 
     const burgerItems = useMemo(() => {
         return {
-            bun: props.data.filter((element) => element.type === "bun"),
-            sauce: props.data.filter((element) => element.type === "sauce"),
-            main: props.data.filter((element) => element.type === "main"),
+            bun: data.filter((element) => element.type === "bun"),
+            sauce: data.filter((element) => element.type === "sauce"),
+            main: data.filter((element) => element.type === "main"),
         };
-    }, [props.data]);
+    }, [data]);
 
     const banRef = useRef<HTMLDivElement>(null);
     const sauceRef = useRef<HTMLDivElement>(null);
     const mainRef = useRef<HTMLDivElement>(null);
     const isTabClick = useRef(false);
-    //const observerRef = useRef<IntersectionObserver | null>(null);
 
     useEffect(() => {
         if (isTabClick.current) {
@@ -65,42 +63,6 @@ export default function BurgerIngredients(props: Props) {
         isTabClick.current = true;
         setCurrent(section);
     };
-
-    // useEffect(() => {
-    //     const observer = new IntersectionObserver((entries) => {
-    //         const entry = entries[0];
-    //         if (entry.isIntersecting) {
-    //             setVisibleSection(entry.target.id);
-    //         }
-    //     }, {
-    //         root: null,
-    //         rootMargin: '0px',
-    //         threshold: 0.5,
-    //     });
-
-    //     sections.forEach((section) => {
-    //         const ref = {
-    //             bun: banRef,
-    //             sauce: sauceRef,
-    //             main: mainRef,
-    //         }[section];
-    //         if(!ref?.current) return;
-    //         observer.observe(ref.current);
-    //     });
-
-    //     observerRef.current = observer;
-
-    //     return () => {
-    //         observer.disconnect();
-    //     };
-    // }, []);
-
-    // useEffect(() => {
-    //     if (visibleSection && visibleSection !== current) {
-    //         setCurrent(visibleSection);
-    //     }
-    // }, [visibleSection, current]);
-
 
     return (
         <section className={BurgerConstructorStyle.burgerIngredientsMainContainer}>
