@@ -1,49 +1,33 @@
 import React from "react";
-import { Modal } from "../modal/modal";
-import IngredientDetails from "../ingredient-details/ingredient-details";
-import { useModal } from "../hooks/useModal";
-import { useAppDispatch, useAppSelector } from "../../services/store";
-import { dropCurentIngrident, setCurentIngrident } from "../../services/ingredients/reducer";
+import { useAppDispatch } from "../../services/store";
+import { setCurentIngrident } from "../../services/ingredients/reducer";
 import BurgerIngredientItem from "./burger-ingredient-item";
 import DataItem from "../../utils/dataType";
-import { RootState } from '../../services/store';
+import { useLocation, useNavigate } from "react-router-dom";
 
 type BurgerItemsProps = {
     data: DataItem[];
 };
 
-const getStateConstructorBurger = (store: RootState) => store.ingredients.curentIngrident;
-
 export default function BurgerItems({ data }: BurgerItemsProps) {
-    const { isModalOpen, openModal, closeModal } = useModal();
-    const currentElement = useAppSelector(getStateConstructorBurger);
     const dispatch = useAppDispatch();
-
-    function handleOpenModal(element: DataItem) {
-        dispatch(setCurentIngrident(element));
-        openModal();
+    const navigate = useNavigate();
+    const location = useLocation();
+  
+    function handleIngredientClick(element: DataItem) {
+      dispatch(setCurentIngrident(element));
+      navigate(`/ingredients/${element._id}`, { state: { backgroundLocation: location } });
     }
-
-    function handleCloseModal() {
-        dispatch(dropCurentIngrident());
-        closeModal();
-    }
-
+  
     return (
-        <>
-            {data.map((element) => (
-                <BurgerIngredientItem
-                    key={element._id}
-                    element={element}
-                    onClick={handleOpenModal}
-                />
-            ))}
-
-            {currentElement && isModalOpen &&
-                <Modal onClose={handleCloseModal} title="Детали ингредиента">
-                    <IngredientDetails {...currentElement} />
-                </Modal>
-            }
-        </>
+      <>
+        {data.map((element) => (
+          <BurgerIngredientItem
+            key={element._id}
+            element={element}
+            onClick={() => handleIngredientClick(element)}
+          />
+        ))}
+      </>
     );
-}
+  }

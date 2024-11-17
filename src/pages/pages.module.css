@@ -1,0 +1,46 @@
+.mainContainer {
+    max-width: 1240px;
+    margin: 0 auto;
+}
+
+.loginContainer {
+    display: flex;
+    flex-direction: column;
+    max-width: 480px;
+    align-items: center;
+    margin: 168px auto;
+}
+
+.inputContainer {
+    gap: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.choice {
+    display: flex;
+    gap: 8px;
+}
+
+.link {
+    color: #4C4CFF;
+    text-decoration: none;
+}
+
+.profile {
+    display: flex;
+    width: 1240px;
+    margin: 0 auto;
+}
+
+.homeContainer {
+    display: flex;
+    /* padding: 16px 320px 16px 320px; */
+    padding: 16px;
+    justify-content: space-between;
+    margin: 0 auto;
+    gap: 40px;
+    max-width: 1280px;
+    width: 100%;
+}

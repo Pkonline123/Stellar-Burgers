@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchOrders } from './thunc';
+import { fetchOrders } from './thunk';
 
 export interface OrderState {
     name: string;

@@ -19,6 +19,7 @@ export const fetchOrders = createAsyncThunk(
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    authorization: localStorage.getItem("accessToken") || ''
                 },
                 body: JSON.stringify({
                     ingredients: burgerIngredients
