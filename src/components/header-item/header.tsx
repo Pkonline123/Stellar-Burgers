@@ -25,9 +25,11 @@ export default function Header() {
                     </div>
 
                 </div>
-                <div className={headerStyle.logoItem}>
-                    <Logo />
-                </div>
+                <Link to={"/"}>
+                    <div className={headerStyle.logoItem}>
+                        <Logo />
+                    </div>
+                </Link>
                 <Link to="/profile" className={headerStyle.profileLink}>
                     <div className={`${headerStyle.menuItem} p-4`}>
                         <ProfileIcon type="secondary" />

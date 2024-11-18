@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import Header from '../header-item/header';
-import { Routes, Route, useLocation, useParams, useNavigate } from 'react-router-dom';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import HomePage from '../../pages/home';
 import Login from '../../pages/login';
 import Register from '../../pages/register';
@@ -22,22 +22,27 @@ type LocationState = {
 export default function App() {
   const location = useLocation();
   const state = location.state as LocationState;
-  const { id } = useParams();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const id = location.pathname.split('/')[2];
 
   const ingredient = useAppSelector((state) => state.ingredients.curentIngrident);
+  const allIngridents = useAppSelector((state) => state.ingredients.items);
 
   useEffect(() => {
     dispatch(fetchIngredients());
   }, [dispatch]);
 
   useEffect(() => {
+    
     if (id && ingredient) {
-      console.log(ingredient + "dispatsh");
       dispatch(setCurentIngrident(ingredient));
     }
-  }, [id, ingredient, dispatch]);
+    else if (id && !ingredient) {
+      dispatch(setCurentIngrident(allIngridents.find((item) => item._id === id)));
+    }
+  }, [id, ingredient, dispatch, allIngridents]);
+
 
   return (
     <>

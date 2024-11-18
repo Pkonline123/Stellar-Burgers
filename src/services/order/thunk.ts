@@ -1,7 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import requestWrapper from '../../utils/requestWrapper';
+import { BASE_URL } from '../../utils/consts';
 
-const urlOrders = "https://norma.nomoreparties.space/api/orders";
+const urlOrders = BASE_URL + "/orders";
 
 interface OrderResponse {
     name: string;

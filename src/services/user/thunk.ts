@@ -1,14 +1,15 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import requestWrapper from '../../utils/requestWrapper';
+import { BASE_URL } from '../../utils/consts';
 
-const urlRegistration = "https://norma.nomoreparties.space/api/auth/register";
-const urlLogin = "https://norma.nomoreparties.space/api/auth/login";
-const urlForgotPassword = "https://norma.nomoreparties.space/api/password-reset";
-const urlResetPassword = "https://norma.nomoreparties.space/api/password-reset/reset";
-const urlUserLogout = "https://norma.nomoreparties.space/api/auth/logout";
-const urlGetUserInfo = "https://norma.nomoreparties.space/api/auth/user";
-const urlUpdateUserInfo = "https://norma.nomoreparties.space/api/auth/user";
-const refreshUserToken = "https://norma.nomoreparties.space/api/auth/token";
+const urlRegistration = BASE_URL + "/auth/register";
+const urlLogin = BASE_URL + "/auth/login";
+const urlForgotPassword = BASE_URL + "/password-reset";
+const urlResetPassword = BASE_URL + "/password-reset/reset";
+const urlUserLogout = BASE_URL + "/auth/logout";
+const urlGetUserInfo = BASE_URL + "/auth/user";
+const urlUpdateUserInfo = BASE_URL + "/auth/user";
+const refreshUserToken = BASE_URL + "/auth/token";
 
 interface UserResponse {
     success: boolean,

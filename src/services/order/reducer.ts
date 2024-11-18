@@ -7,12 +7,14 @@ export interface OrderState {
         number: number;
     };
     success: boolean;
+    isLoading: boolean;
 }
 
 const initialState: OrderState = {
     name: "",
     order: null,
     success: false,
+    isLoading: false,
 };
 
 const OrderStateSlice = createSlice({
@@ -27,16 +29,19 @@ const OrderStateSlice = createSlice({
                 state.name = "";
                 state.order = null;
                 state.success = false;
+                state.isLoading = true;
             })
             .addCase(fetchOrders.fulfilled, (state, action) => {
                 state.name = action.payload.name;
                 state.order = action.payload.order;
                 state.success = true;
+                state.isLoading = false;
             })
             .addCase(fetchOrders.rejected, (state) => {
                 state.name = "";
                 state.order = null;
-                state.success = false;;
+                state.success = false;
+                state.isLoading = false;
             })
     }
 });

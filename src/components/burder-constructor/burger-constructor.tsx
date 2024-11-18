@@ -64,7 +64,7 @@ export default function BurgerConstructor() {
 
         const ingredients = bun?._id ? [bun._id, ...items.map((item) => item._id), bun._id] : items.map((item) => item._id);
 
-        if (ingredients.length === 0) return
+        if (ingredients.length === 0 || bun === null) return
 
         dispatch(fetchOrders(ingredients)).then(() => {
             openModal()
