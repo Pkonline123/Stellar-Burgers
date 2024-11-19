@@ -1,8 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import requestWrapper from '../../utils/requestWrapper';
 import DataItem from '../../utils/dataType';
+import { BASE_URL } from '../../utils/consts';
 
-const urlIngrident = "https://norma.nomoreparties.space/api/ingredients";
+const urlIngrident = BASE_URL + "/ingredients";
 
 export const fetchIngredients = createAsyncThunk(
     'ingredients/fetchIngredients',

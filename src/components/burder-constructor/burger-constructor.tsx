@@ -1,27 +1,50 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import { ConstructorElement, CurrencyIcon, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import burgerConstructorStyle from './burger-constructor-item.module.css';
 import DataItem from '../../utils/dataType';
 import { Modal } from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import { useModal } from "../hooks/useModal";
-import {  useDrop } from 'react-dnd';
-import { addIngredient, dropAllIngridents } from "../../services/constructor/reducer";
+import { useDrop } from 'react-dnd';
+import { addIngredient, dropAllIngridents, restoreConstructor } from "../../services/constructor/reducer";
 import { useAppDispatch, useAppSelector } from "../../services/store";
-import { fetchOrders } from "../../services/order/thunc";
+import { fetchOrders } from "../../services/order/thunk";
 import BurgerConstructorItem from "./burger-constructor-item";
 import { v4 as uuidv4 } from 'uuid';
 import { RootState } from '../../services/store';
+import { useNavigate } from "react-router-dom";
 
 const getStateConstructorBurger = (store: RootState) => store.constructorBurger;
 const getStateOrder = (store: RootState) => store.order;
+const getStateUser = (store: RootState) => store.user.user;
 
 export default function BurgerConstructor() {
 
     const { isModalOpen, openModal, closeModal } = useModal();
     const { bun, items } = useAppSelector(getStateConstructorBurger);
+    const user = useAppSelector(getStateUser);
     const orderInfo = useAppSelector(getStateOrder);
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const constructorState = { bun, items };
+        localStorage.setItem('constructorBurger', JSON.stringify(constructorState));
+    }, [bun, items])
+
+    useEffect(() => {
+        const savedState = localStorage.getItem('constructorBurger');
+        if (savedState) {
+            try {
+                const parsedState = JSON.parse(savedState);
+                if (parsedState && typeof parsedState === 'object') {
+                    dispatch(restoreConstructor(parsedState));
+                }
+            } catch (error) {
+                console.error('Ошибка в парсинге данных из localStorage:', error);
+            }
+        }
+    }, [dispatch]);
 
     const [, dropTarget] = useDrop({
         accept: 'ingredient',
@@ -29,13 +52,19 @@ export default function BurgerConstructor() {
     });
 
     const handleDrop = (item: DataItem) => {
-        // dispatch(addIngredient(item));
         const ingredientWithId = { ...item, id: uuidv4() };
         dispatch(addIngredient(ingredientWithId))
     };
 
     const postOrderInfo = () => {
+        if (!user) {
+            navigate('/login', { replace: true });
+            return
+        }
+
         const ingredients = bun?._id ? [bun._id, ...items.map((item) => item._id), bun._id] : items.map((item) => item._id);
+
+        if (ingredients.length === 0 || bun === null) return
 
         dispatch(fetchOrders(ingredients)).then(() => {
             openModal()

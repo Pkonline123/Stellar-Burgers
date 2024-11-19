@@ -36,6 +36,10 @@ const ConstructorBurgerSlice = createSlice({
             newItems.splice(toIndex, 0, movedItem);
             state.items = newItems;
         },
+        restoreConstructor: (state, action: PayloadAction<ConstructorBurgerState>) => {
+            state.items = action.payload.items;
+            state.bun = action.payload.bun;
+        },
         dropAllIngridents: (state) => {
             state.items = [];
             state.bun = null;
@@ -43,5 +47,5 @@ const ConstructorBurgerSlice = createSlice({
     },
 });
 
-export const { addIngredient, removeIngredient, updateItemsOrder, dropAllIngridents } = ConstructorBurgerSlice.actions;
+export const { addIngredient, removeIngredient, updateItemsOrder, restoreConstructor, dropAllIngridents } = ConstructorBurgerSlice.actions;
 export default ConstructorBurgerSlice.reducer;

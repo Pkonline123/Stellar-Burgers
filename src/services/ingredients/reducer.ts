@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import DataItem from '../../utils/dataType';
-import { fetchIngredients } from './thunc';
+import { fetchIngredients } from './thunk';
 
 export interface IngredientsState {
     items: DataItem[];
