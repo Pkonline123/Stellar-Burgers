@@ -14,6 +14,7 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 import { useAppDispatch, useAppSelector } from '../../services/store';
 import { setCurentIngrident } from '../../services/ingredients/reducer';
 import { fetchIngredients } from '../../services/ingredients/thunk';
+import OrderFeed from '../order-feed/order-feed';
 
 type LocationState = {
   backgroundLocation?: Location;
@@ -34,7 +35,7 @@ export default function App() {
   }, [dispatch]);
 
   useEffect(() => {
-    
+
     if (id && ingredient) {
       dispatch(setCurentIngrident(ingredient));
     }
@@ -58,6 +59,7 @@ export default function App() {
           path="/profile/*"
           element={<ProtectedRoute element={<Profile />} />}
         />
+        <Route path='/feed' element={<OrderFeed />} />
       </Routes>
 
       {state?.backgroundLocation && (
