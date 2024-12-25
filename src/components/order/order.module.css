@@ -1,7 +1,7 @@
 .feedContainer {
     width: 100%;
     max-width: 608px;
-    max-height: 768px;
+    max-height: 700px;
     min-height: 0;
     overflow: hidden;
     overflow-y: auto;
@@ -81,4 +81,61 @@
     color: white;
     font-size: 24px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.statusOrderDone {
+    color: #00CCCC;
+}
+
+.orderCardPageConatiner {
+    margin: 20px 0 0 0;
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    padding: 24px;
+}
+
+.orderCardPageNumber {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.orderCardPageBurgerName {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: start;
+}
+
+.orderCardPageFooter {
+    display: flex;
+    justify-content: space-between;
+}
+
+.orderCardPageBurgerImgContainer {
+    display: flex;
+    flex-direction: column;
+    max-height: 316px;
+    min-height: 0;
+    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.orderCardPageBurgerConatiner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.orderCardPageBurgerImg {
+    background: #131316;
+    border: 2px solid;
+    border-radius: 50%;
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    padding: 3px;
+    border-color: #801AB2;
 }

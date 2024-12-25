@@ -4,12 +4,13 @@ import constructorBurgerReduser from "./constructor/reducer"
 import orderReduser from "./order/reducer"
 import userReduser from "./user/reducer"
 import wsReducerOrderAll from "./wsOrdersAll/reducer"
+import currentOrder from "./currentOrder/reducer"
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import { webSocketMiddleware } from './wsOrdersAll/middleware'
 import { WS_URL_ORDERS_ALL } from '../utils/consts'
 
 const rootReducer = combineReducers({ ingredients: ingredientsReduser, constructorBurger: constructorBurgerReduser, 
-  order: orderReduser, user: userReduser, wsOrderAll: wsReducerOrderAll })
+  order: orderReduser, user: userReduser, wsOrderAll: wsReducerOrderAll, currentOrder: currentOrder })
 
 export const store = configureStore({
   reducer: rootReducer,

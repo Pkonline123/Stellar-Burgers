@@ -15,7 +15,7 @@ export default function OrderCard({ order }: { order: Orders }) {
     const ingredients = useMemo(() => order.ingredients.map(ingredientId => {
         return allIngredients.find(ingredient => ingredient._id === ingredientId);
     }), [order, allIngredients]);
-
+    
     const totalPrice = useMemo(() => ingredients.reduce((acc, ingredient) =>
         acc + (ingredient?.price || 0), 0)
         , [ingredients]);
@@ -50,9 +50,16 @@ export default function OrderCard({ order }: { order: Orders }) {
                 </p>
                 {location.pathname === '/feed' ?
                     null
-                    : <p className="text text_type_main-default">
-                        Создан
-                    </p>
+                    : order.status === 'done' ?
+                        <p className={`text text_type_main-default ${style.statusOrderDone}`}>
+                            Выполнен
+                        </p> : order.status === 'pending' ?
+                            <p className="text text_type_main-default">
+                                Готовится
+                            </p> :
+                            <p className="text text_type_main-default">
+                                Создан
+                            </p>
                 }
             </div>
             <div className={style.feedFooter}>

@@ -11,8 +11,9 @@ export const webSocketMiddleware = (wsUrl: string): Middleware => {
           if (socket) {
             socket.close();
           }
-  
-          socket = new WebSocket(wsUrl);
+
+          console.log(action.payload);
+          socket = new WebSocket(action.payload || wsUrl);
   
           socket.onopen = () => {
             storeAPI.dispatch(connected());
