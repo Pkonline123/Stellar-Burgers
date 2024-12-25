@@ -15,7 +15,7 @@ export const useModal = () => {
   const closeModal = useCallback(() => {
     setIsModalOpen(false);
     dispatch(dropCurentOrder());
-  }, []);
+  }, [dispatch]);
 
   return {
     isModalOpen,
