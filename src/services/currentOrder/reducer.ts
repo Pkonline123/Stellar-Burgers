@@ -29,7 +29,9 @@ const CurrentOrderSlice = createSlice({
     initialState,
     reducers: {
         dropCurentOrder: (state) => {
-            state.orders = null
+            state.status = '';
+            state.orders = null;
+            state.error = '';
         }
     },
     extraReducers: (builder) => {

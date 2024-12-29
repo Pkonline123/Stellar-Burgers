@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { RootState, useAppDispatch, useAppSelector } from '../../services/store';
 import { getUserInfo } from '../../services/user/thunk';
 import { PacmanLoader } from 'react-spinners';
+import styles from './protected-route.module.css';
 
 const getState = (store: RootState) => store.user.user;
 
@@ -17,12 +18,7 @@ export function ProtectedRoute({ element }: { element: JSX.Element }) {
     }, [dispatch]);
 
     if (!isUserLoaded) {
-        return <div style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: 'calc(100vh - 120px)',
-        }}>
+        return <div className={styles.protectedLoader}>
             <PacmanLoader color="#ffffff" />
         </div>;
     }

@@ -64,16 +64,6 @@ export default function OrderCard({ order }: { order: Orders }) {
             </div>
             <div className={style.feedFooter}>
                 <div className={style.feedFooterIngredients}>
-                    {/* {ingredients.map((ingredient, index) =>
-                        <>
-                            <img style={{ marginLeft: index !== 0 ? -15 : 0, zIndex: ingredients.length - index }}
-                                className={style.feedFooterImg} key={`${ingredient?._id} ${index}`}
-                                src={ingredient?.image_mobile} alt={ingredient?.name} />
-                            <p className="text text_type_main-small">
-                                1
-                            </p>
-                        </>)
-                    } */}
                     {(() => {
                         const ingredientCounts: Record<string, number> = ingredients.reduce((acc, ingredient) => {
                             if (ingredient?._id) {
@@ -90,7 +80,7 @@ export default function OrderCard({ order }: { order: Orders }) {
                         }, []);
 
                         return uniqueIngredients.map((ingredient, index) => (
-                            <div className={`${style.feedFooterImgContainer}`} key={ingredient?._id}>
+                            <div className={`${style.feedFooterImgContainer}`} key={`${ingredient?._id} ${index}`}>
                                 <img
                                     style={{
                                         marginLeft: index !== 0 ? -15 : 0, zIndex: uniqueIngredients.length - index,

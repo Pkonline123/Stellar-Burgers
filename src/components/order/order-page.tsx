@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { getCurrentOrder } from "../../services/currentOrder/thunk";
 import OrderCardDetails from "./order-card-details";
 import { PacmanLoader } from "react-spinners";
+import styled from "./order.module.css" 
 
 export default function OrderPage() {
     const { id } = useParams();
@@ -21,12 +22,7 @@ export default function OrderPage() {
 
 
     if (isLoadingm) {
-        return <div style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: 'calc(100vh - 120px)',
-        }}>
+        return <div className={styled.loader}>
             <PacmanLoader color="#ffffff" />
         </div>;
     }
