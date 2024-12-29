@@ -4,6 +4,7 @@ import style from './pages.module.css';
 import { useAppDispatch } from '../services/store';
 import { useEffect } from 'react';
 import { createWsActions } from '../services/wsOrders/actions';
+import { WS_URL } from '../utils/consts';
 
 export default function OrderFeed() {
     const dispatch = useAppDispatch();
@@ -11,7 +12,7 @@ export default function OrderFeed() {
     useEffect(() => {
         const wsOrderAllActions = createWsActions('wsOrderAll');
 
-        dispatch({ type: wsOrderAllActions.connect, payload: "wss://norma.nomoreparties.space/orders/all" });
+        dispatch({ type: wsOrderAllActions.connect, payload: `${WS_URL}/orders/all` });
 
         return () => {
             dispatch({ type: wsOrderAllActions.disconnect });

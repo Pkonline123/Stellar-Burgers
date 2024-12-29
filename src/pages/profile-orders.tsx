@@ -3,6 +3,7 @@ import { useAppDispatch } from "../services/store";
 import Order from "../components/order/order";
 import style from "./pages.module.css";
 import { createWsActions } from '../services/wsOrders/actions';
+import { WS_URL } from "../utils/consts";
 
 export default function ProfileOrders() {
 
@@ -13,7 +14,7 @@ export default function ProfileOrders() {
         const token = localStorage.getItem("accessToken")?.split(" ")[1];
         dispatch({
             type: wsPersonOrdersActions.connect,
-            payload: `wss://norma.nomoreparties.space/orders?token=${token}`,
+            payload: `${WS_URL}/orders?token=${token}`,
         });
 
         return () => {
