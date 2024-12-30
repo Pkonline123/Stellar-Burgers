@@ -29,7 +29,8 @@ export default function App() {
   const state = location.state as LocationState;
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const id = location.pathname.startsWith("/feed") ? location.pathname.split('/')[2] : location.pathname.split('/')[3];
+  const id = location.pathname.startsWith("/feed") ? location.pathname.split('/')[2] :
+    location.pathname.startsWith('/ingredients') ? location.pathname.split('/')[2] : location.pathname.split('/')[3];
 
   const ingredient = useAppSelector((state) => state.ingredients.curentIngrident);
   const allIngridents = useAppSelector((state) => state.ingredients.items);
@@ -38,7 +39,7 @@ export default function App() {
   useEffect(() => {
     dispatch(fetchIngredients());
   }, [dispatch]);
-  
+
   useEffect(() => {
     dispatch(dropCurentOrder());
     if (id && ingredient) {
