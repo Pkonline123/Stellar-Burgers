@@ -12,6 +12,7 @@
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.1",
     "@ya.praktikum/react-developer-burger-ui-components": "^1.14.2",
+    "dayjs": "^1.11.13",
     "react": "^18.3.1",
     "react-burger": "file:",
     "react-dnd": "^16.0.1",

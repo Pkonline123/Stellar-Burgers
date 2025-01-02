@@ -33,14 +33,7 @@ export default function Login() {
 
   if (isLoading) {
     return (
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: 'calc(100vh - 120px)',
-        }}
-      >
+      <div className={styles.loginLoader}>
         <PacmanLoader color="#ffffff" />
       </div>
     );

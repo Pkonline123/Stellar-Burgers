@@ -1,0 +1,151 @@
+.feedContainer {
+    cursor: pointer;
+    width: 100%;
+    max-width: 608px;
+    max-height: 700px;
+    min-height: 0;
+    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.feedElement {
+    display: flex;
+    flex-direction: column;
+    padding: 24px 24px;
+    background-color: #1C1C21;
+    border-radius: 40px;
+    border: 2px;
+    gap: 24px;
+    margin-bottom: 16px;
+}
+
+.feedHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.feedBody {
+    gap: 8px;
+    display: flex;
+    flex-direction: column;
+}
+
+.feedFooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.feedFooterIngredients {
+    display: flex;
+}
+
+.feedFooterPrice {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* .orderCards {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 40%;
+} */
+
+.feedFooterImg {
+    background: #131316;
+    border: 2px solid;
+    border-radius: 50%;
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    padding: 3px;
+    border-color: #801AB2;
+    position: relative;
+}
+
+.feedFooterImgContainer {
+    position: relative;
+    display: block;
+}
+
+.textOverlay {
+    z-index: 9999999;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 24px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.statusOrderDone {
+    color: #00CCCC;
+}
+
+.orderCardPageConatiner {
+    width: 650px;
+    margin: 20px 0 0 0;
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    padding: 24px;
+    margin: 0 auto;
+}
+
+.orderCardPageNumber {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.orderCardPageBurgerName {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: start;
+}
+
+.orderCardPageFooter {
+    display: flex;
+    justify-content: space-between;
+}
+
+.orderCardPageBurgerImgContainer {
+    display: flex;
+    flex-direction: column;
+    max-height: 316px;
+    min-height: 0;
+    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.orderCardPageBurgerConatiner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.orderCardPageBurgerImg {
+    background: #131316;
+    border: 2px solid;
+    border-radius: 50%;
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    padding: 3px;
+    border-color: #801AB2;
+}
+
+.loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 120px);
+}

@@ -40,3 +40,8 @@
     text-decoration: none;
     color: var(--text-inactive-color);
 }
+
+.feedLink {
+    text-decoration: none;
+    color: var(--text-inactive-color);
+}

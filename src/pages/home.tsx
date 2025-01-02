@@ -25,20 +25,7 @@ export default function HomePage() {
             <BurgerConstructor />
           </section>
           {isLoading && (
-            <div
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100vh',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                zIndex: 10,
-              }}
-            >
+            <div className={mainStyles.homeLoader}>
               <PacmanLoader color="#ffffff" />
             </div>
           )}

@@ -17,12 +17,14 @@ export default function Header() {
                         </div>
                     </Link>
 
-                    <div className={`${headerStyle.menuItem} p-4`}>
-                        <ListIcon type="secondary" />
-                        <p className="text text_type_main-default text_color_inactive">
-                            Лента заказов
-                        </p>
-                    </div>
+                    <Link to="/feed" className={headerStyle.feedLink}>
+                        <div className={`${headerStyle.menuItem} p-4`}>
+                            <ListIcon type="secondary" />
+                            <p className="text text_type_main-default text_color_inactive">
+                                Лента заказов
+                            </p>
+                        </div>
+                    </Link>
 
                 </div>
                 <Link to={"/"}>

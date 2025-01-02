@@ -7,13 +7,18 @@ import Register from '../../pages/register';
 import Profile from '../../pages/profile';
 import ForgotPassword from '../../pages/forgot-password';
 import ResetPassword from '../../pages/reset-password';
-import { ProtectedRoute } from '../protected-route/protecred-route';
 import IngredientPage from '../../pages/ingredient';
 import { Modal } from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import { useAppDispatch, useAppSelector } from '../../services/store';
 import { setCurentIngrident } from '../../services/ingredients/reducer';
 import { fetchIngredients } from '../../services/ingredients/thunk';
+import OrderFeed from '../../pages/order-feed';
+import OrderPage from '../order/order-page';
+import { getCurrentOrder } from '../../services/currentOrder/thunk';
+import OrderCardDetails from '../order/order-card-details';
+import { ProtectedRoute } from '../protected-route/protected-route';
+import { dropCurentOrder } from '../../services/currentOrder/reducer';
 
 type LocationState = {
   backgroundLocation?: Location;
@@ -24,23 +29,30 @@ export default function App() {
   const state = location.state as LocationState;
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const id = location.pathname.split('/')[2];
+  const id = location.pathname.startsWith("/feed") ? location.pathname.split('/')[2] :
+    location.pathname.startsWith('/ingredients') ? location.pathname.split('/')[2] : location.pathname.split('/')[3];
 
   const ingredient = useAppSelector((state) => state.ingredients.curentIngrident);
   const allIngridents = useAppSelector((state) => state.ingredients.items);
+  const currentOrder = useAppSelector((state) => state.currentOrder.orders);
 
   useEffect(() => {
     dispatch(fetchIngredients());
   }, [dispatch]);
 
   useEffect(() => {
-    
+    dispatch(dropCurentOrder());
     if (id && ingredient) {
-      dispatch(setCurentIngrident(ingredient));
+      dispatch(getCurrentOrder(id));
+    } else if (id && !ingredient) {
+      const foundIngredient = allIngridents.find((item) => item._id === id);
+      if (foundIngredient) {
+        dispatch(setCurentIngrident(foundIngredient));
+      } else {
+        dispatch(getCurrentOrder(id));
+      }
     }
-    else if (id && !ingredient) {
-      dispatch(setCurentIngrident(allIngridents.find((item) => item._id === id)));
-    }
+
   }, [id, ingredient, dispatch, allIngridents]);
 
 
@@ -58,6 +70,11 @@ export default function App() {
           path="/profile/*"
           element={<ProtectedRoute element={<Profile />} />}
         />
+        <Route path='/profile/orders/:id'
+          element={<ProtectedRoute element={<OrderPage />} />}
+        />
+        <Route path='/feed' element={<OrderFeed />} />
+        <Route path='/feed/:id' element={<OrderPage />} />
       </Routes>
 
       {state?.backgroundLocation && (
@@ -70,6 +87,30 @@ export default function App() {
                   <IngredientDetails {...ingredient} />
                 ) : (
                   <p>Ингредиент не найден</p>
+                )}
+              </Modal>
+            }
+          />
+          <Route
+            path="/profile/orders/:id"
+            element={
+              <Modal title="Детали заказа" onClose={() => navigate(-1)}>
+                {currentOrder ? (
+                  <OrderCardDetails order={currentOrder} />
+                ) : (
+                  <p>Заказ не найден</p>
+                )}
+              </Modal>
+            }
+          />
+          <Route
+            path="/feed/:id"
+            element={
+              <Modal title="Детали заказа" onClose={() => navigate(-1)}>
+                {currentOrder ? (
+                  <OrderCardDetails order={currentOrder} />
+                ) : (
+                  <p>Заказ не найден</p>
                 )}
               </Modal>
             }
