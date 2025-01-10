@@ -24,4 +24,4 @@
 * публикация проекта на GitHub Pages: `npm run deploy`
 
 #### Ссылка на проект
-* [на GitHub Pages]()
+* [на GitHub Pages](https://pkonline123.github.io/Stellar-Burgers/)
