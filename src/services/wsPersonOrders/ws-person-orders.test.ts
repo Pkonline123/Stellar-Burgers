@@ -1,7 +1,7 @@
-import reducer from './reducer';
+import reducer, { WsPersonOrdersState } from './reducer';
 
-describe('wsOrderAllSlice reducer', () => {
-    const initialState = {
+describe('wsPersonOrdersSlice reducer', () => {
+    const initialState: WsPersonOrdersState = {
         connected: false,
         orders: [],
         total: 0,
@@ -10,11 +10,11 @@ describe('wsOrderAllSlice reducer', () => {
     };
 
     it('should return the initial state', () => {
-        expect(reducer(undefined, { type: undefined })).toEqual(initialState);
+        expect(reducer(undefined, { type: "undefined" })).toEqual(initialState);
     });
 
     it('should handle CONNECTED', () => {
-        const action = { type: 'wsOrderAll/CONNECTED' };
+        const action = { type: 'wsPersonOrders/CONNECTED' };
         const state = reducer(initialState, action);
         expect(state).toEqual({
             ...initialState,
@@ -30,7 +30,7 @@ describe('wsOrderAllSlice reducer', () => {
             totalToday: 10,
             error: null,
         };
-        const action = { type: 'wsOrderAll/DISCONNECTED' };
+        const action = { type: 'wsPersonOrders/DISCONNECTED' };
         const state = reducer(currentState, action);
         expect(state).toEqual({
             connected: false,
@@ -43,7 +43,7 @@ describe('wsOrderAllSlice reducer', () => {
 
     it('should handle MESSAGE_RECEIVED', () => {
         const action = {
-            type: 'wsOrderAll/MESSAGE_RECEIVED',
+            type: 'wsPersonOrders/MESSAGE_RECEIVED',
             payload: {
                 orders: [
                     { _id: '1', ingredients: ['1'], status: 'done', name: 'Order 1', createdAt: '', updatedAt: '', number: 1 },
@@ -65,7 +65,7 @@ describe('wsOrderAllSlice reducer', () => {
 
     it('should handle ERROR', () => {
         const action = {
-            type: 'wsOrderAll/ERROR',
+            type: 'wsPersonOrders/ERROR',
             payload: 'Connection failed',
         };
         const state = reducer(initialState, action);

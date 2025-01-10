@@ -1,8 +1,8 @@
-import reducer from './reducer';
+import reducer, { OrderState } from './reducer';
 import { fetchOrders } from './thunk';
 
 describe('OrderStateSlice', () => {
-    const initialState = {
+    const initialState: OrderState = {
         name: "",
         order: null,
         success: false,

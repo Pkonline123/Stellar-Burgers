@@ -1,14 +1,14 @@
-import reducer from './reducer';
+import reducer, { UserState } from './reducer';
 import { registrationUsers, loginUsers, logoutUsers, getUserInfo, updateUserInfo } from './thunk';
 
 describe('UserStateSlice reducer', () => {
-    const initialState = {
+    const initialState: UserState = {
         success: false,
         user: null,
     };
 
     it('should return the initial state', () => {
-        expect(reducer(undefined, { type: undefined })).toEqual(initialState);
+        expect(reducer(undefined, { type: 'unknown' })).toEqual(initialState);
     });
 
     // Registration tests
@@ -22,7 +22,7 @@ describe('UserStateSlice reducer', () => {
     });
 
     it('should handle registrationUsers.fulfilled', () => {
-        const action = { 
+        const action = {
             type: registrationUsers.fulfilled.type,
             payload: { user: { email: 'test@test.com', name: 'Test User' } },
         };
@@ -53,7 +53,7 @@ describe('UserStateSlice reducer', () => {
     });
 
     it('should handle loginUsers.fulfilled', () => {
-        const action = { 
+        const action = {
             type: loginUsers.fulfilled.type,
             payload: { user: { email: 'test@test.com', name: 'Test User' } },
         };
@@ -112,7 +112,7 @@ describe('UserStateSlice reducer', () => {
     });
 
     it('should handle getUserInfo.fulfilled', () => {
-        const action = { 
+        const action = {
             type: getUserInfo.fulfilled.type,
             payload: { user: { email: 'test@test.com', name: 'Test User' } },
         };
@@ -143,7 +143,7 @@ describe('UserStateSlice reducer', () => {
     });
 
     it('should handle updateUserInfo.fulfilled', () => {
-        const action = { 
+        const action = {
             type: updateUserInfo.fulfilled.type,
             payload: { user: { email: 'test@test.com', name: 'Updated User' } },
         };

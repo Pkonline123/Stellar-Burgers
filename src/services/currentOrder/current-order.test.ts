@@ -1,4 +1,4 @@
-import reducer, { dropCurentOrder } from './reducer';
+import reducer, { CurrentOrder, dropCurentOrder } from './reducer';
 import { getCurrentOrder } from './thunk';
 
 describe('CurrentOrderSlice', () => {
@@ -8,7 +8,7 @@ describe('CurrentOrderSlice', () => {
         error: '',
     };
 
-    const mockOrder = {
+    const mockOrder: CurrentOrder = {
         _id: "1",
         ingredients: ["ingredient1", "ingredient2"],
         owner: "owner1",
