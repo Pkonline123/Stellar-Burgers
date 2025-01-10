@@ -1,38 +1,18 @@
 import reducer, {
     setCurentIngrident,
     dropCurentIngrident,
-    IngredientsState
+    initialState
 } from './reducer';
+import { ingredient, bun } from '../../utils/test-constants';
 import { fetchIngredients } from './thunk';
 
 describe('IngredientsSlice', () => {
-    const initialState: IngredientsState = {
-        items: [],
-        loadding: true,
-        err: "",
-        curentIngrident: null
-    };
 
     it('should handle initial state', () => {
         expect(reducer(undefined, { type: 'unknown' })).toEqual(initialState);
     });
 
     it('should set current ingredient', () => {
-        const ingredient = {
-            id: '1',
-            _id: "1",
-            name: "Соус Spicy-X",
-            type: "sauce",
-            proteins: 30,
-            fat: 20,
-            carbohydrates: 40,
-            calories: 30,
-            price: 90,
-            image: "https://code.s3.yandex.net/react/code/sauce-02.png",
-            image_mobile: "https://code.s3.yandex.net/react/code/sauce-02-mobile.png",
-            image_large: "https://code.s3.yandex.net/react/code/sauce-02-large.png",
-            __v: 0
-        };
         const state = reducer(initialState, setCurentIngrident(ingredient));
         expect(state.curentIngrident).toEqual(ingredient);
     });
@@ -40,21 +20,7 @@ describe('IngredientsSlice', () => {
     it('should drop current ingredient', () => {
         const stateWithIngredient = {
             ...initialState,
-            curentIngrident: {
-                id: '1',
-                _id: "1",
-                name: "Соус Spicy-X",
-                type: "sauce",
-                proteins: 30,
-                fat: 20,
-                carbohydrates: 40,
-                calories: 30,
-                price: 90,
-                image: "https://code.s3.yandex.net/react/code/sauce-02.png",
-                image_mobile: "https://code.s3.yandex.net/react/code/sauce-02-mobile.png",
-                image_large: "https://code.s3.yandex.net/react/code/sauce-02-large.png",
-                __v: 0
-            }
+            curentIngrident: ingredient
         };
         const state = reducer(stateWithIngredient, dropCurentIngrident());
         expect(state.curentIngrident).toBeNull();
@@ -71,34 +37,10 @@ describe('IngredientsSlice', () => {
         it('should handle fetchIngredients.fulfilled', () => {
             const mockData = [
                 {
-                    id: '1',
-                    _id: "1",
-                    name: "Соус Spicy-X",
-                    type: "sauce",
-                    proteins: 30,
-                    fat: 20,
-                    carbohydrates: 40,
-                    calories: 30,
-                    price: 90,
-                    image: "https://code.s3.yandex.net/react/code/sauce-02.png",
-                    image_mobile: "https://code.s3.yandex.net/react/code/sauce-02-mobile.png",
-                    image_large: "https://code.s3.yandex.net/react/code/sauce-02-large.png",
-                    __v: 0
+                    ingredient
                 },
                 {
-                    id: '2',
-                    _id: "2",
-                    name: "Краторная булка N-200i",
-                    type: "bun",
-                    proteins: 80,
-                    fat: 24,
-                    carbohydrates: 53,
-                    calories: 420,
-                    price: 1255,
-                    image: "https://code.s3.yandex.net/react/code/bun-02.png",
-                    image_mobile: "https://code.s3.yandex.net/react/code/bun-02-mobile.png",
-                    image_large: "https://code.s3.yandex.net/react/code/bun-02-large.png",
-                    __v: 0
+                    bun
                 }
             ];
             const action = {

@@ -1,4 +1,8 @@
-
+import {
+   ingredientClass, closeButtonClass,
+   tabClass, burgerConstructorContainerClass,
+   burgerConstructorItemClass
+} from "../../src/utils/test-constants";
 
 describe('service is available', function () {
    beforeEach(() => {
@@ -13,47 +17,51 @@ describe('service is available', function () {
    it('should open ingredient details', function () {
       cy.visit('/')
       cy.wait(1000);
-      cy.get('[class*=burgerIngredientItem]').first().click()
+      cy.get(ingredientClass).first().click()
       cy.contains('Детали ингредиента')
    });
 
    it('should close ingredient details by button', function () {
       cy.visit('/')
-      cy.get('[class*=burgerIngredientItem]').first().click()
-      cy.get('[class*=closeButton]').first().click();
+      cy.get(ingredientClass).first().click()
+      cy.get(closeButtonClass).first().click();
       cy.visit('/');
    });
 
    it('should tab', function () {
       cy.visit('/')
-      cy.get('[class^=tab]').last().click();
-      cy.wait(1000).get('[class^=tab]').first().click();
+      cy.get(tabClass).last().click();
+      cy.wait(1000).get(tabClass).first().click();
    })
 
    it('should scroll', function () {
       cy.visit('/')
       cy.get('[class^=burger-ingredients_scroll').scrollTo(0, 500).wait(1000)
-      cy.get('[class^=tab]').last().click()
+      cy.get(tabClass).last().click()
    });
 
    it('should dragndrop ingredients and set bun and drag constructor and delete item open order number', function () {
       cy.visit('/')
-      cy.get('[class*=burgerIngredientItem]').eq(0).drag('[class*=burger-constructor-item_containerConstructor]');
-      cy.get('[class*=burgerIngredientItem]').eq(4).drag('[class*=burger-constructor-item_containerConstructor]');
-      cy.get('[class*=burgerIngredientItem]').eq(1).drag('[class*=burger-constructor-item_containerConstructor]');
-      cy.get('[class*=burgerIngredientItem]').eq(7).drag('[class*=burger-constructor-item_containerConstructor]');
-      cy.get('[class*=burgerIngredientItem]').eq(11).drag('[class*=burger-constructor-item_containerConstructor]');
-      cy.get('[class*=burgerIngredientItem]').eq(4).drag('[class*=burger-constructor-item_containerConstructor]');
-      cy.get('[class*=burgerIngredientItem]').eq(0).drag('[class*=burger-constructor-item_containerConstructor]');
 
-      cy.get('[class*=constructorItem]').eq(0)
-         .drag('[class*=constructorItem]')
-      cy.get('[class*=constructorItem]').eq(1)
-         .drag('[class*=constructorItem]')
+      cy.get(ingredientClass).as('ingredients');
+      cy.get(burgerConstructorContainerClass).as('constructorContainer');
+      cy.get('@ingredients').eq(0).drag('@constructorContainer');
+      cy.get('@ingredients').eq(4).drag('@constructorContainer');
+      cy.get('@ingredients').eq(1).drag('@constructorContainer');
+      cy.get('@ingredients').eq(7).drag('@constructorContainer');
+      cy.get('@ingredients').eq(11).drag('@constructorContainer');
+      cy.get('@ingredients').eq(4).drag('@constructorContainer');
+      cy.get('@ingredients').eq(0).drag('@constructorContainer');
+
+      cy.get(burgerConstructorItemClass).as('constructorItems');
+      cy.get('@constructorItems').eq(0).drag('@constructorItems');
+      cy.get('@constructorItems').eq(1).drag('@constructorItems');
+
 
       cy.get('[class^=constructor-element__action]').eq(2).click()
 
-      cy.get('button').contains('Оформить заказ').click()
+      cy.contains('Оформить заказ').click()
+
    })
 
    it('should authorization and order number', function () {
@@ -64,20 +72,23 @@ describe('service is available', function () {
       cy.get('input').last().type(password)
       cy.get('button').click();
 
-      cy.get('[class*=burgerIngredientItem]').eq(0).drag('[class*=burger-constructor-item_containerConstructor]');
-      cy.get('[class*=burgerIngredientItem]').eq(4).drag('[class*=burger-constructor-item_containerConstructor]');
-      cy.get('[class*=burgerIngredientItem]').eq(1).drag('[class*=burger-constructor-item_containerConstructor]');
-      cy.get('[class*=burgerIngredientItem]').eq(7).drag('[class*=burger-constructor-item_containerConstructor]');
-      cy.get('[class*=burgerIngredientItem]').eq(11).drag('[class*=burger-constructor-item_containerConstructor]');
-      cy.get('[class*=burgerIngredientItem]').eq(4).drag('[class*=burger-constructor-item_containerConstructor]');
-      cy.get('[class*=burgerIngredientItem]').eq(0).drag('[class*=burger-constructor-item_containerConstructor]');
+      cy.get(ingredientClass).as('ingredients');
+      cy.get(burgerConstructorContainerClass).as('constructorContainer');
+
+      cy.get('@ingredients').eq(0).drag('@constructorContainer');
+      cy.get('@ingredients').eq(4).drag('@constructorContainer');
+      cy.get('@ingredients').eq(1).drag('@constructorContainer');
+      cy.get('@ingredients').eq(7).drag('@constructorContainer');
+      cy.get('@ingredients').eq(11).drag('@constructorContainer');
+      cy.get('@ingredients').eq(4).drag('@constructorContainer');
+      cy.get('@ingredients').eq(0).drag('@constructorContainer');
 
       cy.intercept('POST', '/api/orders').as('postOrder');
-      cy.wait(1000).get('button').contains('Оформить заказ').click()
+      cy.wait(1000).contains('Оформить заказ').click()
       cy.wait('@postOrder').its('response.statusCode').should('eq', 200);
 
       cy.wait(2000).get('[class^=order-details_identifiredOrderNumber]').and('exist')
-      cy.get(('[class*=closeButton]')).click();
+      cy.get(closeButtonClass).click();
 
    })
 })

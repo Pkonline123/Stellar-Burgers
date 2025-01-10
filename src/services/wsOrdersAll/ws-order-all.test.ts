@@ -1,13 +1,7 @@
-import reducer, { WsOrderAllState } from './reducer';
+import reducer, { initialState } from './reducer';
+import { order } from '../../utils/test-constants';
 
 describe('wsOrderAllSlice reducer', () => {
-    const initialState: WsOrderAllState = {
-        connected: false,
-        orders: [],
-        total: 0,
-        totalToday: 0,
-        error: null,
-    };
 
     it('should return the initial state', () => {
         expect(reducer(undefined, { type: 'undefined' })).toEqual(initialState);
@@ -25,7 +19,9 @@ describe('wsOrderAllSlice reducer', () => {
     it('should handle DISCONNECTED', () => {
         const currentState = {
             connected: true,
-            orders: [{ _id: '1', ingredients: ['1'], status: 'done', name: 'Order 1', createdAt: '', updatedAt: '', number: 1 }],
+            orders: [
+                order
+            ],
             total: 100,
             totalToday: 10,
             error: null,
@@ -42,12 +38,20 @@ describe('wsOrderAllSlice reducer', () => {
     });
 
     it('should handle MESSAGE_RECEIVED', () => {
+        const order2 = {
+            ...order,
+            _id: '2',
+            ingredients: ['2'],
+            status: 'pending',
+            name: 'Order 2',
+            number: 2
+        };
         const action = {
             type: 'wsOrderAll/MESSAGE_RECEIVED',
             payload: {
                 orders: [
-                    { _id: '1', ingredients: ['1'], status: 'done', name: 'Order 1', createdAt: '', updatedAt: '', number: 1 },
-                    { _id: '2', ingredients: ['2'], status: 'pending', name: 'Order 2', createdAt: '', updatedAt: '', number: 2 },
+                    order,
+                    order2,
                 ],
                 total: 200,
                 totalToday: 20,

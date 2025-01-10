@@ -18,7 +18,7 @@ export interface Orders {
     number: number;
 }
 
-const initialState: WsOrderAllState = {
+export const initialState: WsOrderAllState = {
     connected: false,
     orders: [],
     total: 0,

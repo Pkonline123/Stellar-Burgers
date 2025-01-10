@@ -6,7 +6,7 @@ export interface ConstructorBurgerState {
     bun: DataItem | null;
 }
 
-const initialState: ConstructorBurgerState = {
+export const initialState: ConstructorBurgerState = {
     items: [],
     bun: null
 };

@@ -1,12 +1,8 @@
-import reducer, { UserState } from './reducer';
+import reducer, { initialState } from './reducer';
 import { registrationUsers, loginUsers, logoutUsers, getUserInfo, updateUserInfo } from './thunk';
 
 describe('UserStateSlice reducer', () => {
-    const initialState: UserState = {
-        success: false,
-        user: null,
-    };
-
+    
     it('should return the initial state', () => {
         expect(reducer(undefined, { type: 'unknown' })).toEqual(initialState);
     });

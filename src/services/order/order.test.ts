@@ -1,13 +1,7 @@
-import reducer, { OrderState } from './reducer';
+import reducer, { initialState } from './reducer';
 import { fetchOrders } from './thunk';
 
 describe('OrderStateSlice', () => {
-    const initialState: OrderState = {
-        name: "",
-        order: null,
-        success: false,
-        isLoading: false,
-    };
 
     it('should handle initial state', () => {
         expect(reducer(undefined, { type: 'unknown' })).toEqual(initialState);
