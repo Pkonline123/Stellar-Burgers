@@ -18,7 +18,7 @@ export interface CurrentOrder {
     number: number;
 }
 
-const initialState: CurrentOrderState = {
+export const initialState: CurrentOrderState = {
     status: '',
     orders: null,
     error: '',

@@ -10,7 +10,7 @@ export interface OrderState {
     isLoading: boolean;
 }
 
-const initialState: OrderState = {
+export const initialState: OrderState = {
     name: "",
     order: null,
     success: false,

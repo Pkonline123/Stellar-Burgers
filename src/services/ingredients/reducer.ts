@@ -9,7 +9,7 @@ export interface IngredientsState {
     curentIngrident: DataItem | null
 }
 
-const initialState: IngredientsState = {
+export const initialState: IngredientsState = {
     items: [],
     loadding: true,
     err: "",

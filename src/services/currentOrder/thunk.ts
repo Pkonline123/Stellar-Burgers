@@ -13,7 +13,6 @@ export const getCurrentOrder = createAsyncThunk(
                 }
             })
         );
-
         return result;
     }
 )
